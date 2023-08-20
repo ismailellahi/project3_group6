@@ -32,6 +32,7 @@ def welcome():
     return (
         f"/api/v1.0/FireLocations<br/>"
         f"/api/v1.0/FireLocations/floatingChart<br/>"
+        f"/api/v1.0/FireLocations/barChart<br/>"
     )
 
 @app.route("/api/v1.0/FireLocations")
@@ -99,6 +100,26 @@ def floating_chart():
         result_dict["Incident_Station_Area"] = result[0]
         result_dict["Time_Taken_to_Arrive"] = result[1]
         result_dict["Month"] = result[2]
+        result_list.append(result_dict)
+
+    return jsonify(result_list)
+
+@app.route("/api/v1.0/FireLocations/barChart")
+def bar_chart():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    # Query all fire locations
+    results = session.query(fire.Incident_Station_Area, fire.Final_Incident_Types)
+   
+    session.close()
+
+    result_list = []
+
+    for result in results:
+        result_dict = {}
+        result_dict["Incident_Station_Area"] = result[0]
+        result_dict["Final_Incident_Types"] = result[1]
         result_list.append(result_dict)
 
     return jsonify(result_list)
