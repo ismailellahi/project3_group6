@@ -69,7 +69,7 @@ d3.json("http://127.0.0.1:5000/api/v1.0/FireLocations").then(data => {
 
         var layout = {
             width: 750,
-            height: 550,
+            height: 500,
             showlegend: false, // Disable the built-in legend
             // Other layout properties
         };
