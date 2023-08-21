@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
               beginAtZero: true,
               title: {
                 display: true,
-                text: 'Station Names',
+                text: 'Location Names',
                 font: {
                   size: 16,
                 },
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
           plugins: {
             title: {
               display: true,
-              text: 'Top 15 Stations with the Highest # of Incidents',
+              text: 'Top 15 Locations with the Highest # of Incidents',
               position: 'top',
               font: {
                 size: 20,
