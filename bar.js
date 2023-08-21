@@ -1,4 +1,4 @@
-// Populate Data in Text boxes and BUild FLoating Chart
+// Populate Data in Text boxes and BUild FLoating Chart 
 // Fetch the JSON data 
 d3.json("http://127.0.0.1:5000/api/v1.0/FireLocations/floatingChart").then(function (data) {
 
