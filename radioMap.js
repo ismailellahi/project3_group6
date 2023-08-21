@@ -1,4 +1,4 @@
-// Fetch the JSON data 
+// Fetch the JSON data  
 d3.json("http://127.0.0.1:5000/api/v1.0/FireLocations").then(function (data) {
 
     // List all the unique caller IDs  
