@@ -1,4 +1,4 @@
-// Load the CSV data 
+// Load the CSV data
 d3.json("http://127.0.0.1:5000/api/v1.0/FireLocations").then(data => {
     let locations = Array.from(new Set(data.map(item => item.Location)));
 
@@ -48,10 +48,7 @@ d3.json("http://127.0.0.1:5000/api/v1.0/FireLocations").then(data => {
 
         var layout = {
             width: 750,
-            height: 400,
-            font: {
-                family: 'Arial',
-            }
+            height: 400
         };
 
         // Update the pie charts

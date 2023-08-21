@@ -18,14 +18,14 @@ function createMap(response) {
         // shadowAnchor: [0,0]
     });
 
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < 1000; i++) {
         let fire = fires[i]
 
         // let fireMarker = L.marker([fire.Latitude,fire.Longitude])
 
         // fireMarkers.push(fireMarker)
 
-        if (fire.Time_Taken_to_Arrive < 5.0) {
+        if (fire.Time_Taken_to_Arrive < 6.0) {
             let fireMarkerLesserThanAvg = L.marker([fire.Latitude, fire.Longitude], {icon: myIcon}).bindPopup(`<h1>${fire.Location}</h1> <hr> <h3>Station Area Code ${fire.Incident_Station_Area.toLocaleString()}</h3>`)
             fireMarkersLesserThanAvg.push(fireMarkerLesserThanAvg)
         }
@@ -33,14 +33,14 @@ function createMap(response) {
 
     }
 
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < 1000; i++) {
         let fire = fires[i]
 
         // let fireMarker = L.marker([fire.Latitude,fire.Longitude])
 
         // fireMarkers.push(fireMarker)
 
-        if (fire.Time_Taken_to_Arrive > 5.0) {
+        if (fire.Time_Taken_to_Arrive >= 6.0) {
             let fireMarkerGreaterThanAvg = L.marker([fire.Latitude, fire.Longitude]).bindPopup(`<h1>${fire.Location}</h1> <hr> <h3>Station Area Code ${fire.Incident_Station_Area.toLocaleString()}</h3>`)
             fireMarkersGreaterThanAvg.push(fireMarkerGreaterThanAvg)
         }
@@ -53,7 +53,7 @@ function createMap(response) {
 
     let firemarkers = L.markerClusterGroup();
 
-    for ( let i = 0; i < 500; i++){
+    for ( let i = 0; i < 3000; i++){
         let fire = fires[i];
 
         firemarkers.addLayer(L.marker([fire.Latitude, fire.Longitude]))
