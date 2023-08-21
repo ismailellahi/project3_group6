@@ -30,6 +30,27 @@
 
 
     <style>
+        .chart-heading {
+            text-align: center;
+            font-weight: bold;
+        }
+        /* .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .legend-label {
+            white-space: wrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        } */
         .text-box-data {
             font-size: 28px;
             font-weight: bold;
@@ -144,25 +165,43 @@
                 <div class="well" style="background-color:powderblue;">
                     <h4>Select a location:</h4>
                     <select id="locationDropdown">
+                        <!-- Dropdown options here -->
                     </select>
                 </div>
             </div>
-            <div class="col-md-8" >
-                <div class="chart-container" id="pie-chart-container1">
+            <div class="col-md-8">
+                <!-- Container for Pie Chart 1 -->
+                <div class="chart-container">
                     <h4 class="chart-heading"><br>Call Types in Each Station</br></h4>
                     <div id="pie-chart1" class="chart"></div>
                 </div>
-
-                <div class="chart-container" id="pie-chart-container2">
+                
+                <!-- Container for Legend 1
+                <div class="legend-container" id="legend-container1">
+                    <div class="legend-box"></div>
+                </div> -->
+        
+                <!-- Container for Pie Chart 2 -->
+                <div class="chart-container">
                     <h4 class="chart-heading">Incident Category</h4>
                     <div id="pie-chart2" class="chart"></div>
                 </div>
-
-                <div class="chart-container" id="pie-chart-container3">
+                
+                <!-- Container for Legend 2 -->
+                <!-- <div class="legend-container" id="legend-container2">
+                    <div class="legend-box"></div>
+                </div> -->
+        
+                <!-- Container for Pie Chart 3 -->
+                <div class="chart-container">
                     <h4 class="chart-heading">Event Alarm Level</h4>
                     <div id="pie-chart3" class="chart"></div>
                 </div>
-                <canvas id="combo"> </canvas>
+                
+                <!-- Container for Legend 3 -->
+                <!-- <div class="legend-container" id="legend-container3">
+                    <div class="legend-box"></div>
+                </div> -->
             </div>
         </div>
 
