@@ -1,6 +1,6 @@
 
 
-function createMap(response) {
+function createMap(response) { 
     let fires = response;
     // console.log(fires)
 
