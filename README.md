@@ -1,6 +1,6 @@
 # project3_group6
 
-Worked ont he following:-
+Worked ont the following:-
 1. Helped in selecting the  database.
 2. Cleaned the csv using pandas and exported to sqlite
 3. created app.py along with Galina to read data from sql lite database
