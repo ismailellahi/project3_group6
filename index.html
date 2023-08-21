@@ -30,27 +30,6 @@
 
 
     <style>
-        .chart-heading {
-            text-align: center;
-            font-weight: bold;
-        }
-        /* .legend-item {
-            display: flex;
-            align-items: center;
-            margin: 5px;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
-        }
-
-        .legend-label {
-            white-space: wrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        } */
         .text-box-data {
             font-size: 28px;
             font-weight: bold;
@@ -75,11 +54,11 @@
 </head>
 ​
 
-<body style="background-color:powderblue;">
+<body>
     ​
     <div class="container">
         <div class="row">
-            <div class="col-md-12 jumbotron text-center" style="background-color:lightskyblue;">
+            <div class="col-md-12 jumbotron text-center" style="background-color:powderblue;">
                             <h1> <img src="firelogo.png" alt="Toronto Fire logo"
                     width="100" height="100" />  Fire Services Toronto</h1>
                 <h2>      Analysis on Fire Incidents Occured in 2021 </h2>
@@ -87,7 +66,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12 jumbotron text-center" style="background-color:powderblue;">
+            <div class="col-md-12 jumbotron text-center" style="background-color:rgb(231, 249, 252);">
                 <p style="text-align:left;">Toronto Fire Services is the City’s only all hazards emergency response organization. Fire Services provides Toronto residents, visitors and businesses with protection against loss of life, property and the environment from the effects of fire, illness, accidents, and all other hazards through preparedness, prevention, public education, and emergency response, with an emphasis on quality services, efficiency, effectiveness, and safety.</p>
 
                 <p style="text-align:left;">The Fire Prevention Division of Toronto Fire Services, provides information about emergencies, fire regulations, home inspections, and the Alarm for Life program for residential smoke and carbon monoxide alarms. Public education and school fire safety programs are also offered to the public.</p>                    
@@ -100,13 +79,13 @@
         MAP CHART  -->
         <div class="row" >
             <div class="col-md-4">
-                <div class="well" style="background-color:powderblue;">
+                <div class="well" style="background-color:rgb(231, 249, 252);">
                     <div class="text-box-heading" >
                         <h4 class="text-box-title" >Total Number of Stations:</h4>
                     </div>
                     <div id="num-stations-data" class="text-box-data"></div>
                 </div>
-                <div class="well" style="background-color:powderblue;" >
+                <div class="well" style="background-color:rgb(231, 249, 252);">
                     <div class="text-box-heading">
                         <h4 class="text-box-title">Average Response Time, min.:</h4>
                     </div>
@@ -122,8 +101,8 @@
         <!--        
        Floating Bar CHART -->
         <div class="row">
-            <div class="col-md-4" style="background-color:powderblue;">
-                <div class="well" style="background-color:powderblue;">
+            <div class="col-md-4">
+                <div class="well" style="background-color:rgb(231, 249, 252);">
                     <div class="text-box-heading">
                         <h5 class="text-title">Number of incidents & avg response time<br>by station in selected group:
                         </h5>
@@ -131,10 +110,10 @@
                     <div id="station-data" class="stations-box-data"></div>
                 </div>
             </div>
-            <div class="col-md-8" style="background-color:powderblue;">
+            <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="well" style="background-color:powderblue;">
+                        <div class="well" style="background-color:rgb(231, 249, 252);">
                             <h4>Select group of stations:</h4>
                             <select id="selDataset">
                                 <option value="aboveAvg">Stations with response time above AVG</option>
@@ -162,46 +141,28 @@
         <!-- PIE CHART -->
         <div class="row">
             <div class="col-md-4">
-                <div class="well" style="background-color:powderblue;">
+                <div class="well" style="background-color:rgb(231, 249, 252);">
                     <h4>Select a location:</h4>
                     <select id="locationDropdown">
-                        <!-- Dropdown options here -->
                     </select>
                 </div>
             </div>
-            <div class="col-md-8">
-                <!-- Container for Pie Chart 1 -->
-                <div class="chart-container">
+            <div class="col-md-8" >
+                <div class="chart-container" id="pie-chart-container1">
                     <h4 class="chart-heading"><br>Call Types in Each Station</br></h4>
                     <div id="pie-chart1" class="chart"></div>
                 </div>
-                
-                <!-- Container for Legend 1
-                <div class="legend-container" id="legend-container1">
-                    <div class="legend-box"></div>
-                </div> -->
-        
-                <!-- Container for Pie Chart 2 -->
-                <div class="chart-container">
+
+                <div class="chart-container" id="pie-chart-container2">
                     <h4 class="chart-heading">Incident Category</h4>
                     <div id="pie-chart2" class="chart"></div>
                 </div>
-                
-                <!-- Container for Legend 2 -->
-                <!-- <div class="legend-container" id="legend-container2">
-                    <div class="legend-box"></div>
-                </div> -->
-        
-                <!-- Container for Pie Chart 3 -->
-                <div class="chart-container">
+
+                <div class="chart-container" id="pie-chart-container3">
                     <h4 class="chart-heading">Event Alarm Level</h4>
                     <div id="pie-chart3" class="chart"></div>
                 </div>
-                
-                <!-- Container for Legend 3 -->
-                <!-- <div class="legend-container" id="legend-container3">
-                    <div class="legend-box"></div>
-                </div> -->
+                <canvas id="combo"> </canvas>
             </div>
         </div>
 
@@ -209,20 +170,20 @@
         RADIO MAP CHART -->
         <div class="row">
             <div class="col-md-4">
-                <div class="well" style="background-color:powderblue;">
+                <div class="well" style="background-color:rgb(231, 249, 252);">
                     <div class="text-box-heading">
                         <h4 class="text-box-title">Types of Origin of CALL ID:</h4>
                     </div>
                     <div id="call_ID_types" class="text-box-data"></div>
                 </div>
-                <div class="well" style="background-color:powderblue;">
+                <div class="well" style="background-color:rgb(231, 249, 252);">
                     <div class="text-box-heading">
                         <h4 class="text-box-title"> Average Daily Calls recevied combined across all fire stations </h4>
                     </div>
 
                     <div id="avg-call" class="text-box-data"></div>
 
-                    <div class="text-box-heading1" style="background-color:powderblue;">
+                    <div class="text-box-heading1" style="background-color:rgb(231, 249, 252);">
                         <h4 class="text-box-title">Choose option to display Map of Caller ID by </h4>
                         <form id="form" class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="callidMAP">
