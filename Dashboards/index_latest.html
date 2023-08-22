@@ -1,0 +1,245 @@
+<!DOCTYPE html>  
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fire incidents in Toronto</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Link to Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Link to Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Link to Chart NOT NEEDED -->
+    <!-- <script src="path/to/chartjs/dist/chart.umd.js"></script> -->
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Leaflet JavaScript code -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+
+    <style>
+        .chart-heading {
+            text-align: center;
+            font-weight: bold;
+        }
+        .text-box-data {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .text-title {
+            font-weight: bold;
+        }
+    </style>
+    ​
+
+    <!-- Marker cluster JavaScript code -->
+    <script type="text/javascript"
+        src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+
+    <!-- Marker cluster CSS -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
+
+
+</head>
+​
+
+<body>
+    ​
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 jumbotron text-center" style="background-color:powderblue;">
+                            <h1> <img src="firelogo.png" alt="Toronto Fire logo"
+                    width="100" height="100" />  Fire Services Toronto</h1>
+                <h2>      Analysis on Fire Incidents Occured in 2021 </h2>
+                </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 jumbotron text-center" style="background-color:rgb(231, 249, 252);">
+                <p style="text-align:left;">Toronto Fire Services is the City’s only all hazards emergency response organization. Fire Services provides Toronto residents, visitors and businesses with protection against loss of life, property and the environment from the effects of fire, illness, accidents, and all other hazards through preparedness, prevention, public education, and emergency response, with an emphasis on quality services, efficiency, effectiveness, and safety.</p>
+
+                <p style="text-align:left;">The Fire Prevention Division of Toronto Fire Services, provides information about emergencies, fire regulations, home inspections, and the Alarm for Life program for residential smoke and carbon monoxide alarms. Public education and school fire safety programs are also offered to the public.</p>                    
+                <p style="text-align:left;"> <b>Toronto Fire Services is the argest fire service in Canada, and the fifth largest fire service in North America.</b></p>
+                    
+                <p style="text-align:left;">In 2019, Toronto Fire Services earned accredited agency status from the Commission on Fire Accreditation International (CFAI), making the City of Toronto the largest city in North America to have an accredited fire service. The multi-year journey to accreditation involved a comprehensive review of every aspect of TFS’ operations, which were evaluated against 256 key performance indicators and international best practices. Toronto Fire Services’ Accredited Agency status is valid from 2019-2024 </p>
+            </div>
+        </div>
+        <!-- 
+        MAP CHART  -->
+        <div class="row" >
+            <div class="col-md-4">
+                <div class="well" style="background-color:rgb(231, 249, 252);">
+                    <div class="text-box-heading" >
+                        <h4 class="text-box-title" >Total Number of Stations:</h4>
+                    </div>
+                    <div id="num-stations-data" class="text-box-data"></div>
+                </div>
+                <div class="well" style="background-color:rgb(231, 249, 252);">
+                    <div class="text-box-heading">
+                        <h4 class="text-box-title">Average Response Time, min.:</h4>
+                    </div>
+                    <div id="avg-time" class="text-box-data"></div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="map" style="width: 100%; height: 300px;"> </div>
+                <a href="index_leon.html" target="_blank">Click to open MAP in seperate tab</a>
+            </div>
+        </div>
+        <hr>
+        <!--        
+       Floating Bar CHART -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="well" style="background-color:rgb(231, 249, 252);">
+                    <div class="text-box-heading">
+                        <h5 class="text-title">Number of incidents & avg response time<br>by station in selected group:
+                        </h5>
+                    </div>
+                    <div id="station-data" class="stations-box-data"></div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="well" style="background-color:rgb(231, 249, 252);">
+                            <h4>Select group of stations:</h4>
+                            <select id="selDataset">
+                                <option value="aboveAvg">Stations with response time above AVG</option>
+                                <option value="belowAvg">Stations with response time below AVG</option>
+                            </select>
+                            <hr>
+                            <h4>Station ID:</h4>
+                            <select id="selDatasetStation" onchange="optionChanged(this.value)"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div id="donut"> </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <canvas id="floatingbar"> </canvas>
+                </div>
+                <div class="row">
+                    <div id="vbarchart"> </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- PIE CHART -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="well" style="background-color:rgb(231, 249, 252);">
+                    <h4>Select a location:</h4>
+                    <select id="locationDropdown">
+                        <!-- Dropdown options here -->
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <h4 class="chart-heading">Event Alarm Level</h4>
+                    <div id="pie-chart3" class="chart"></div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <!-- Container for Bar Chart-->
+                <div>
+                    <canvas id="horizontalBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+          
+        <!-- RADIO MAP CHART -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="well" style="background-color:rgb(231, 249, 252);">
+                    <div class="text-box-heading">
+                        <h4 class="text-box-title">Types of Origin of CALL ID:</h4>
+                    </div>
+                    <div id="call_ID_types" class="text-box-data"></div>
+                </div>
+                <div class="well" style="background-color:rgb(231, 249, 252);">
+                    <div class="text-box-heading">
+                        <h4 class="text-box-title"> Average Daily Calls recevied combined across all fire stations </h4>
+                    </div>
+
+                    <div id="avg-call" class="text-box-data"></div>
+
+                    <div class="text-box-heading1" style="background-color:rgb(231, 249, 252);">
+                        <h4 class="text-box-title">Choose option to display Map of Caller ID by </h4>
+                        <form id="form" class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="callidMAP">
+                                <input type="radio" name="controlHeatmapType" value="MRR">Avg Calls per Day<br>
+                            </label>
+                            <label class="callidMAP2">
+                                <input type="radio" name="controlHeatmapType" value="LYL">Total Calls for 2021<br>
+                            </label>
+                        </form>
+
+
+
+
+                        <!-- <input type="radio" name="callid"  value="avg">Avg Calls per day
+                  <input type="radio" name="callid" value="total">Total Calls in 2021
+                  <br>
+                  <button type="button" id="callidMAP" >
+                    Avg calls per Day
+                  </button>
+                  <button type="button" id="callidMAP2" >
+                    Total Calls per Day
+                  </button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="mapi" style="width: 100%; height: 300px;"> </div>
+             
+            </div>
+
+        </div>
+
+
+
+        <!-- NOTES -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-box-heading">
+                    <h7 class="text-box-title">Notes:</h7>
+                </div>
+                <div class="text-box-data">
+                    <h6>Data Source: "Fire Services Emergency Incident Basic Detail", 2021 <br>
+                        https://open.toronto.ca/
+                    </h6>
+                </div>
+            </div>
+        </div>
+
+
+        ​
+        <!-- Change the name of .js file here -->
+        <script type="text/javascript" src="map2cluster.js"></script>
+        <script src="barchart.js"></script>
+        <script src="piechart.js"></script>
+        <script src="bar.js"></script>
+        <script src="radioMap.js"></script>
+        ​
+</body>
+​
+
+</html>
